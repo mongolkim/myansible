@@ -1,0 +1,6 @@
+---
+- name: configure for other compute ntp service
+  copy: src=/etc/ansible/roles/ntp/files/compute-chrony.conf dest=/etc/chrony.conf owner=root group=root mode=0644
+- name: restart ntp
+  raw: systemctl start chronyd.service  
+#service: name=chrony state=restarted

@@ -1,0 +1,20 @@
+---
+# the below commands are working for puppet master node
+#
+- name: mkdir glance under puppet dir
+  file: path=/etc/puppet/modules/glance state=directory owner=root group=root mode=755
+
+- name: mkdir files dir under glance
+  file: path=/etc/puppet/modules/glance/files state=directory owner=root group=root mode=755 
+          
+- name: mkdir manifests dir under glance
+  file: path=/etc/puppet/modules/glance/manifests state=directory owner=root group=root mode=755
+        
+- name: copying puppet pp file under manifest dir
+  copy: src=/etc/ansible/roles/glance/files/init.pp dest=/etc/puppet/modules/glance/manifests/init.pp owner=root group=root mode=644
+
+- name: copying glance-api conf
+  copy: src=/etc/ansible/roles/glance/files/glance-api.conf dest=/etc/puppet/modules/glance/files/glance-api.conf owner=root group=root mode=644 
+
+- name: copying glance-registry conf
+  copy: src=/etc/ansible/roles/glance/files/glance-registry.conf dest=/etc/puppet/modules/glance/files/glance-registry.conf owner=root group=root mode=644

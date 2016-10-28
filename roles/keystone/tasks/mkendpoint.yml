@@ -1,0 +1,6 @@
+- name: copying admin-openrc.sh
+  copy: src=/etc/ansible/roles/keystone/files/admin-openrc.sh dest=/root/admin-openrc.sh owner=root group=root mode=755
+
+
+- name: openstack service create
+  command: 

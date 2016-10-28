@@ -1,0 +1,14 @@
+---
+- name: mkdir rabbitmq dir under puppet dir
+  file: path=/etc/puppet/mariadb state=touch
+
+- name: mkdir files dir under rabbitmq
+  file: path=/etc/puppet/modules/rabbitmq/files state=directory owner=root group=root mode=755
+
+- name: mkdir manifests dir under rabbitmq
+  file: path=/etc/puppet/modules/rabbitmq/manifests state=directory owner=root group=root mode=755
+
+- name: copying puppet pp file under manifest dir
+  copy: src=/etc/ansible/roles/rabbitmq/files/init.pp dest=/etc/puppet/modules/rabbitmq/manifests/init.pp owner=root group=root mode=644
+
+

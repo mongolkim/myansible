@@ -1,0 +1,12 @@
+---
+- name: create keystone database in MySQL Database
+  command: mysql -uroot -e "create database {{ item }}";
+  with_items:
+   - cinder
+
+- name: give privileges on databases
+  command: mysql -uroot -e "GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'{{ item }}' IDENTIFIED BY 'KEYSTONE_DBPASS123??';"
+  with_items:  item 
+   - controller
+   - localhost
+

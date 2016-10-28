@@ -1,0 +1,12 @@
+---
+- name: create keystone database in MySQL Database
+  command: mysql -uroot -e "create database {{ item }}";
+  with_items:
+   - glance
+   
+
+- name: give privileges on databases
+  command: mysql -uroot -e "GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'{{ item }}' IDENTIFIED BY 'KEYSTONE_DBPASS';"
+  with_items:  item 
+   - controller
+   - localhost

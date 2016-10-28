@@ -1,0 +1,58 @@
+---
+- hosts: controller
+  tasks:
+   - name: copying hosts to all working nodes
+     copy: src=/etc/hosts dest=/etc/hosts owner=root group=root mode=644
+
+# first to build up Puppet Master 
+- hosts: master
+  tasks:
+   - include: '/etc/ansible/roles/yum/tasks/master.yml'
+
+# installation puppet agent on controller node (should be all nodes except for master node)
+- hosts: controller
+  tasks:
+   - include: roles/puppet/tasks/puppet-agent.yml
+
+# installing yum repo on Controller 
+#- hosts: controller
+#  tasks:
+#   - include: '/etc/ansible/roles/yum/tasks/controller.yml'
+
+# copying config file for memcached on puppet master
+- hosts: master
+  roles:
+   - memcached
+
+# copying all config file for rabbitmq on puppet master node
+- hosts: master
+  roles: 
+   - rabbitmq
+
+# copying all config file for httpd on puppet master 
+- hosts: master
+  roles: 
+   - httpd
+
+
+# copying all config for mariadb on controller node
+- hosts: master
+  roles:
+   - mariadb
+
+- hosts: master
+  tasks:
+   - name: copying controller.pp to puppet/manifests 
+     copy: src=/etc/ansible/roles/puppet/files/controller.pp dest=/etc/puppet/manifests/controller.pp owner=root group=root mode=644
+
+   - name: copying site.pp to puppet/manifests
+     copy: src=/etc/ansible/roles/puppet/files/site.pp dest=/etc/puppet/manifests/site.pp owner=root group=root mode=644
+
+
+- hosts: controller
+  tasks: 
+   - name: start installation 
+     raw: puppet agent --no-daemonize --onetime
+
+
+

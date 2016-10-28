@@ -1,0 +1,8 @@
+---
+- name: puppet agent installation
+  yum: name={{ item }} state=present
+  with_items:
+   - puppet
+
+- name: copying configuration for puppet master
+  copy: src=/etc/ansible/roles/puppet/files/puppet-agent.conf dest=/etc/puppet/puppet.conf 

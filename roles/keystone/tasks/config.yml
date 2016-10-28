@@ -1,0 +1,28 @@
+---
+- name: mkdir keystone under puppet dir
+  file: path=/etc/puppet/modules/keystone state=directory owner=root group=root mode=755
+
+
+
+- name: mkdir files dir under keystone
+  file: path=/etc/puppet/modules/keystone/files state=directory owner=root group=root mode=755 
+          
+- name: mkdir manifests dir under keystone
+  file: path=/etc/puppet/modules/keystone/manifests state=directory owner=root group=root mode=755
+        
+
+- name: copying puppet pp file under manifest dir
+  copy: src=/etc/ansible/roles/keystone/files/init.pp dest=/etc/puppet/modules/keystone/manifests/init.pp owner=root group=root mode=644
+
+- name: copying keystone conf
+  copy: src=/etc/ansible/roles/keystone/files/keystone.conf dest=/etc/puppet/modules/keystone/files/keystone.conf owner=root group=root mode=644 
+
+- name: copying wsgi-keystone conf
+  copy: src=/etc/ansible/roles/keystone/files/wsgi-keystone.conf dest=/etc/puppet/modules/keystone/files/wsgi-keystone.conf owner=root group=root mode=644
+
+- name: copying controller.pp to puppet/manifests 
+  copy: src=/etc/ansible/roles/keystone/files/controller.pp dest=/etc/puppet/manifests/controller.pp owner=root group=root mode=644
+
+- name: copying site.pp to puppet/manifests
+  copy: src=/etc/ansible/roles/keystone/files/site.pp dest=/etc/puppet/manifests/site.pp owner=root group=root mode=644
+

@@ -1,0 +1,32 @@
+---
+- hosts: controller
+  roles:
+   - glance
+
+- hosts: controller
+  tasks:
+   - name: glance installation by puppet agent
+     raw: puppet agent --test
+
+
+- hosts: 
+  tasks:
+   - name: copying openstack command scripts to controller node
+     copy: src=/etc/ansible/roles/glance/files/glance.sh dest=/opt/glance.sh owner=root group=root mode=755 
+
+   - name: running scripts for openstack command
+     raw: /opt/glance.sh
+
+   - name: synchronize the glance database
+     raw: su -s /bin/sh -c "glance-manage db_sync" glance
+
+
+- hosts: controller
+   - name: starting glance-api
+     service: name=openstack-glance-api.service state=started enabled=yes
+
+   - name: starting glance-registry
+     service: name=openstack-glance-registry.serivce state=started enabled=yes
+
+
+

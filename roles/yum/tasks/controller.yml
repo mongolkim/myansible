@@ -1,0 +1,10 @@
+---   
+- name: base package installation on controller
+  yum: name={{ item }} state=present
+  with_items:
+   - https://b.mirrors.lanunion.org/epel/epel-release-latest-7.noarch.rpm
+   - https://rdoproject.org/repos/openstack-liberty/rdo-release-liberty.rpm 
+   - centos-release-openstack-liberty
+
+- name: yum update on controller
+  command: yum update -y

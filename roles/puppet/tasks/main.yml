@@ -1,0 +1,6 @@
+---
+- hosts: master
+  include: puppet-master.yml
+
+- hosts: agent
+  include: puppet-agent.yml

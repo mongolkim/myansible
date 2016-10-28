@@ -1,0 +1,20 @@
+---
+- name: puppet master installation
+  yum: name={{ item }} state=present
+  with_items:
+   - puppet
+   - puppet-server
+   
+- name: copying configuration for puppet master
+  copy: src=/etc/ansible/roles/puppet/files/puppet-master.conf dest=/etc/puppet/puppet.conf owner=root group=root mode=644
+
+- name: copying autosign config to puppet master
+  copy: src=/etc/ansible/roles/puppet/files/autosign.conf dest=/etc/puppet/autosign.conf owner=root group=root mode=644
+
+
+- name: copying controller.pp to puppet/manifests 
+  copy: src=/etc/ansible/roles/puppet/files/controller.pp dest=/etc/puppet/manifests/controller.pp owner=root group=root mode=644
+
+- name: copying site.pp to puppet/manifests
+  copy: src=/etc/ansible/roles/puppet/files/site.pp dest=/etc/puppet/manifests/site.pp owner=root group=root mode=644
+

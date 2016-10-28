@@ -1,0 +1,4 @@
+node "controller.novalocal"{
+        include memcache
+        include rabbitmq
+}

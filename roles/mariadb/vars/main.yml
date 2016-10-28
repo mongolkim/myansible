@@ -1,0 +1,12 @@
+databaseName:
+ - keystone
+ - glance
+ - nova
+ - neutron
+ - cinder
+ 
+privilegesName:
+ - localhost
+ - controller
+ 
+

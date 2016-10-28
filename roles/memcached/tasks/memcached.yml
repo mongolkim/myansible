@@ -1,0 +1,18 @@
+---
+- name: mkdir memcache under puppet dir
+  file: path=/etc/puppet/modules/memcached state=directory owner=root group=root mode=755
+
+
+
+- name: touch files dir under memcached
+  file: path=/etc/puppet/modules/memcached/files state=directory owner=root group=root mode=755
+
+- name: touch manifests dir under memcached
+  file: path=/etc/puppet/modules/memcached/manifests state=directory owner=root group=root mode=755
+
+- name: copying memcache config under files dir
+  copy: src=/etc/ansible/roles/memcached/files/memcached dest=/etc/puppet/modules/memcached/files/memcached owner=root group=root mode=644
+ 
+- name: copying puppet pp file under manifest dir
+  copy: src=/etc/ansible/roles/memcached/files/init.pp dest=/etc/puppet/modules/memcached/manifests/init.pp owner=root group=root mode=644
+

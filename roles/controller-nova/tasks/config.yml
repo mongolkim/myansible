@@ -1,0 +1,16 @@
+---
+- name: mkdir controller-nova under puppet dir
+  file: path=/etc/puppet/modules/controller-nova state=directory owner=root group=root mode=755
+
+- name: mkdir files dir under controller-nova
+  file: path=/etc/puppet/modules/controller-nova/files state=directory owner=root group=root mode=755 
+          
+- name: mkdir manifests dir under controller-nova
+  file: path=/etc/puppet/modules/controller-nova/manifests state=directory owner=root group=root mode=755
+        
+- name: copying puppet pp file under manifest dir
+  copy: src=/etc/ansible/roles/controller-nova/files/init.pp dest=/etc/puppet/modules/controller-nova/manifests/init.pp owner=root group=root mode=644
+
+- name: copying nova conf
+  copy: src=/etc/ansible/roles/controller-nova/files/nova.conf dest=/etc/puppet/modules/controller-nova/files/nova.conf owner=root group=root mode=644 
+

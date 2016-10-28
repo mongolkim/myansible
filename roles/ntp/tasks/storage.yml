@@ -1,0 +1,6 @@
+---
+- name: configure for storage ntp service
+  copy: src=/etc/ansible/roles/ntp/files/storage-chrony.conf dest=/etc/chrony.conf owner=root group=root mode=0644
+- name: restart ntp
+  raw: systemctl start chronyd.service  
+#service: name=chrony state=restarted

@@ -1,0 +1,22 @@
+---
+- hosts: master
+  tasks:
+   - include: '/etc/ansible/roles/controller-nova/tasks/config.yml'
+
+
+- hosts: controller
+  tasks:
+   - include: '/etc/ansible/roles/controller-nova/tasks/mysql.yml'
+
+- hosts: controller
+  tasks:
+   - name: copying nova scripts to controller node
+     copy: src=/etc/ansible/roles/controller-nova/files/nova.sh dest=/opt/nova.sh owner=root group=root mode=755
+   
+   - name: source nova scripts
+     raw: /opt/nova.sh
+
+   - name: start nova-api service
+     service: name=openstack-nova-api.service state=started enabled=yes
+
+

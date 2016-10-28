@@ -1,0 +1,16 @@
+---
+- hosts: controller
+  roles:
+   - compute-nova
+
+
+- hosts: controller
+  tasks:
+   - name: nova installation by puppet agent
+     raw: puppet agent --test
+   
+
+   - name: start nova compute service on Compute Node
+     service: name=openstack-nova-compute.service state=started enabled=yes
+
+ 

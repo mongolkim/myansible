@@ -1,0 +1,9 @@
+---   
+- name: base for puppet master
+  yum: name={{ item }} state=present
+  with_items:
+   - centos-release-openstack-liberty
+
+
+- name: yum update master node
+  command: yum update -y

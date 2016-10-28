@@ -1,0 +1,16 @@
+---
+- name: mkdir httpd under puppet dir
+  file: path=/etc/puppet/modules/httpd state=directory owner=root group=root mode=755
+
+
+
+- name: touch files dir under httpd
+  file: path=/etc/puppet/modules/httpd/files state=directory owner=root group=root mode=755
+
+- name: touch manifests dir under httpd
+  file: path=/etc/puppet/modules/httpd/manifests state=directory owner=root group=root mode=755
+
+- name: copying puppet pp file under manifest dir
+  copy: src=/etc/ansible/roles/httpd/files/init.pp dest=/etc/puppet/modules/httpd/manifests/init.pp owner=root group=root mode=644
+
+

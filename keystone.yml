@@ -1,0 +1,27 @@
+---
+# copying all config files to puppet master
+- hosts: master
+  tasks:
+   - include: '/etc/ansible/roles/keystone/tasks/config.yml'
+
+# keystone database operaions on controller node
+- hosts: controller
+  tasks:
+   - include: "/etc/ansible/roles/keystone/tasks/mysql.yml"
+
+# keystone create endpoints on controller node
+- hosts: controller
+  tasks: 
+   - name: copying keystone.sh to controller node
+     copy: src=/etc/ansible/roles/keystone/files/keystone.sh dest=/opt/keystone.sh owner=root group=root mode=755
+
+   - name: source keystone.sh
+     raw: /opt/keystone.sh
+  
+   - name: restart httpd
+     service: name=httpd state=restarted
+
+   - name: restart memcached
+     service: name=memcached state=restarted
+
+
